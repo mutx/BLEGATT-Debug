@@ -105,27 +105,30 @@ debugButton.addEventListener('pointerup', function(event) {
 		printEnabledDefined("Bluetooth.requestDevice", (navigator.bluetooth.requestDevice != undefined));
 		printEnabledDefined("Bluetooth.getAvailability", (navigator.bluetooth.getAvailability != undefined));
 
-		navigator.bluetooth.getAvailability()
-		.then(availability => {
-			if (availability) {
-				printLog("Bluetooth Adapter", "Available");
-			} else {
-				printLog("Bluetooth Adapter", "Unavailable (check chrome://bluetooth-internals scan devices, check bluetooth adapter LMP version is >= 6 (Bluetooth Core Spec 4.0))", false);
-			}
-		}).catch(error => {
-			printLog("getAvailability Error", "[" + error + "]", false);
-		});
+		if (navigator.bluetooth.getAvailability != undefined) {
+			navigator.bluetooth.getAvailability()
+			.then(availability => {
+				if (availability) {
+					printLog("Bluetooth Adapter", "Available");
+				} else {
+					printLog("Bluetooth Adapter", "Unavailable (check chrome://bluetooth-internals scan devices, check bluetooth adapter LMP version is >= 6 (Bluetooth Core Spec 4.0))", false);
+				}
+			}).catch(error => {
+				printLog("getAvailability Error", "[" + error + "]", false);
+			});
+		}
 
-		navigator.bluetooth.requestDevice({acceptAllDevices: true})
-		.then(device => {
-			printBluetoothDevice(device);
-		}, reject => {
-			printLog("requestDevice Reject", "[" + reject + "]", false)
-			printNote("If \"No compatible devices can be found\"", "Check bluetooth hardware LMP version is >=6");
-		}).catch(error => {
-			printLog("requestDevice Error", "[" + error + "]", false);
-		});
-
+		if (navigator.bluetooth.requestDevice != undefined) {
+			navigator.bluetooth.requestDevice({acceptAllDevices: true})
+			.then(device => {
+				printBluetoothDevice(device);
+			}, reject => {
+				printLog("requestDevice Reject", "[" + reject + "]", false)
+				printNote("If \"No compatible devices can be found\"", "Check bluetooth hardware LMP version is >=6");
+			}).catch(error => {
+				printLog("requestDevice Error", "[" + error + "]", false);
+			});
+		}
 
 	} else {
 		printEnabledDefined("navigator.bluetooth", false);
