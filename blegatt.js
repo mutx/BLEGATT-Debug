@@ -1,4 +1,5 @@
 // https://developer.chrome.com/articles/bluetooth
+https://github.com/WebBluetoothCG/web-bluetooth/blob/main/implementation-status.md
 
 let colorFail = "LightCoral";
 let colorPass = "PaleGreen";
@@ -36,52 +37,55 @@ function printEnabledDefined(title, isEnabled=true) {
 }
 
 var OBJtoString = function(_o,_m,_rf,_dep,_res){
-    _dep = [],
-    _rf = function(obj,n,_n,_a,_k,_i,_ws,_f,_e){
+
+    _dep = [], _rf = function(obj,n,_n,_a,_k,_i,_ws,_f,_e) {
+
         if(typeof obj != "object") return false;
+
         if(typeof _a === "undefined") _a = "null/undefined/self-reference";
-        _dep.push(obj),
-        _f = (_dep.length < 1) ? function(){} : function(_z,_x){
-            for(_x = 0; _x <= _dep.length; _x++){
+
+        _dep.push(obj), _f = (_dep.length < 1) ? function(){} : function(_z,_x) {
+            for (_x = 0; _x <= _dep.length; _x++) {
                 if(obj[_z] == _dep[_x]) return true;
             }
             return false;
         }
+
         _ws = "";
         if(typeof n === "undefined") n = 1;
         if(typeof _n === "undefined") _n = n;
+
         for(_k = 0; _k <= n; _k++){
             _ws += " ";
         }
+
         var response ="{ \n";
-        for(var _i in obj){
-            if(typeof obj[_i] !== "object"){
-            if(typeof obj[_i] === "string") obj[_i] = "'"+obj[_i].toString()+"'";
-            if(typeof obj[_i] === "boolean") obj[_i] = obj[_i].toString() + " (boolean)";
-            response += _ws + _i + " : " + obj[_i].toString();
-            response += "\n";
-            continue;
-        }
+
+        for (var _i in obj) {
+            if (typeof obj[_i] !== "object") {
+            	if(typeof obj[_i] === "string") obj[_i] = "'"+obj[_i].toString()+"'";
+            	if(typeof obj[_i] === "boolean") obj[_i] = obj[_i].toString() + " (boolean)";
+           		response += _ws + _i + " : " + obj[_i].toString();
+           		response += "\n";
+            	continue;
+        	}
+
             response += (_f(_i)) ? _ws + _i + " : "+ _a +" (prevent loop)\n" : _ws + _i + " : " + _rf(obj[_i],n+_n,_n,_a);
         }
-    if(_n != n) response += _ws;
+
+    	if(_n != n) response += _ws;
+
     	return response +="} \n";
     }
+
 	_res = _rf(_o,_m);
 	_dep = [];
 	return _res;
 }
 
-function printBluetoothDevice(device) {
-	console.log(device);
-
-	if (!(device instanceof BluetoothDevice)) {
-		printLog("printBluetoothDevice", "Incorrect type", false);
-		return;
-	}
-
+function printObject(obj) {
 	let printElement = document.createElement("pre");
-	printElement.textContent = "BluetoothDevice\n" + OBJtoString(device, 4);
+	printElement.textContent = "BluetoothDevice\n" + OBJtoString(obj, 4);
 	printElement.style.backgroundColor = colorNote;
 	printElement.style.display = "grid";
 	printElement.style.borderTop = "1px black solid";
@@ -121,12 +125,13 @@ debugButton.addEventListener('pointerup', function(event) {
 		if (navigator.bluetooth.requestDevice != undefined) {
 			navigator.bluetooth.requestDevice({acceptAllDevices: true})
 			.then(device => {
-				printBluetoothDevice(device);
+				printObject(device);
 			}, reject => {
 				printLog("requestDevice Reject", "[" + reject + "]", false)
 				printNote("If \"No compatible devices can be found\"", "Check bluetooth hardware LMP version is >=6");
 			}).catch(error => {
 				printLog("requestDevice Error", "[" + error + "]", false);
+				printObject(navigator.bluetooth.requestDevice);
 			});
 		}
 
