@@ -104,6 +104,12 @@ debugButton.addEventListener('pointerup', function(event) {
 	printEnabledDefined("Secure Context", isSecureContext);
 	printEnabledDefined("Bluetooth", (navigator.bluetooth != undefined));
 
+	printEnabledDefined("BLENative", (BLENative != undefined));
+
+	if (BLENative != undefined) {
+		printObject(BLENative);
+	}
+
 	if (navigator.bluetooth != undefined) {
 
 		printEnabledDefined("Bluetooth.requestDevice", (navigator.bluetooth.requestDevice != undefined));
