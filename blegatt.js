@@ -6,6 +6,7 @@ var colorPass = "PaleGreen";
 var colorNote = "SkyBlue";
 var debugBody = document.getElementById("debugBody");
 var debugButton = document.getElementById("debugButton");
+var debugClipboard = "";
 
 debugButton.style.position = "fixed";
 debugButton.style.zIndex = "100";
@@ -20,6 +21,8 @@ function _print(title, value, color) {
 	logMsg.style.display = "grid";
 	logMsg.style.borderTop = "1px black solid";
 	debugBody.appendChild(logMsg);
+
+	debugClipboard = debugClipboard + "\n\n" + title + ":\n" + value;
 }
 
 function printLog(title, value, isPass=true) {
@@ -90,18 +93,23 @@ var OBJtoString = function(_o,_m,_rf,_dep,_res){
 
 function printObject(objName, obj) {
 	let printElement = document.createElement("pre");
-	printElement.textContent = objName + "\n" + OBJtoString(obj, 4);
+	let objStr = objName + "\n" + OBJtoString(obj, 4);
+	printElement.textContent = objStr;
 	printElement.style.backgroundColor = colorNote;
 	printElement.style.display = "grid";
 	printElement.style.borderTop = "1px black solid";
 	printElement.style.margin = 0;
 	debugBody.appendChild(printElement);
-}
 
+	debugClipboard = debugClipboard + "\n\n" + objStr;
+}
 
 // User gesture required (touch/mouse-click) to run navigator.bluetooth.requestDevice
 debugButton.addEventListener('pointerup', function(event) {
 
+	let promos = [];
+
+	debugClipboard = "";
 	debugBody.innerHTML = "";
 
 	// HTTPS secure context required
@@ -157,7 +165,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		printEnabledDefined("Bluetooth.getAvailability", (typeof navigator.bluetooth.getAvailability !== "undefined"));
 
 		if (typeof navigator.bluetooth.getAvailability !== "undefined") {
-			navigator.bluetooth.getAvailability()
+			promos[promos.length] = navigator.bluetooth.getAvailability()
 			.then(availability => {
 				if (availability) {
 					printLog("Bluetooth Adapter", "Available");
@@ -170,7 +178,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		}
 
 		if (typeof navigator.bluetooth.requestDevice !== "undefined") {
-			navigator.bluetooth.requestDevice({acceptAllDevices: true})
+			promos[promos.length] = navigator.bluetooth.requestDevice({acceptAllDevices: true})
 			.then(device => {
 				printObject("Bluetooth Device", device);
 			}, reject => {
@@ -186,4 +194,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		printEnabledDefined("navigator.bluetooth", false);
 	}
 
+	Promise.allSettled(promos).then(() => {
+		navigator.clipboard.writeText(debugClipboard);
+	});
 });
