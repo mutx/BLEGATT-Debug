@@ -99,6 +99,44 @@ function printObject(objName, obj) {
 	debugBody.appendChild(printElement);
 }
 
+function getVariableDefinition(varName) {
+	// Get a reference to the variable
+	var varRef = window[varName];
+
+	// Convert the variable to a string
+	var varString = varRef.toString();
+
+	// Create a new Error object to get a stack trace
+	var err = new Error();
+
+	// Get the stack trace from the error object
+	var stackTrace = err.stack;
+
+	// Split the stack trace into an array of lines
+	var stackTraceLines = stackTrace.split('\n');
+
+	// Iterate over the lines in the stack trace
+	for (var i = 0; i < stackTraceLines.length; i++) {
+		var line = stackTraceLines[i];
+
+		// Look for the line that contains the variable string
+		if (line.indexOf(varString) !== -1) {
+
+			// Extract the file name and line number from that line
+			var fileName = line.match(/\((.*):[0-9]*:[0-9]*\)/)[1];
+			var lineNumber = line.match(/:[0-9]*:([0-9]*)/)[1];
+
+			// Return an object with the file name and line number
+			return {
+				fileName: fileName,
+		    	lineNumber: lineNumber
+		  	};
+		}
+	}
+
+	// If we didn't find the variable definition, return null
+	return null;
+}
 
 
 // User gesture required (touch/mouse-click) to run navigator.bluetooth.requestDevice
