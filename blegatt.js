@@ -107,20 +107,49 @@ debugButton.addEventListener('pointerup', function(event) {
 	// HTTPS secure context required
 	printEnabledDefined("Secure Context", isSecureContext);
 
+	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
+	if (typeof BLENative !== "undefined") {
+
+		printEnabledDefined("BLENative.enable", (typeof BLENative.enable !== "undefined"));
+		if (typeof BLENative.enable !== "undefined") {
+
+			printObject("BLENative.enable [Pre]", BLENative.enable);
+
+			BLENative.enable();
+
+			printObject("BLENative.enable [Post]", BLENative.enable);
+
+
+			printEnabledDefined("bluetoothMixinName", (typeof bluetoothMixinName !== "undefined"));
+			if (typeof bluetoothMixinName !== "undefined") {
+				printObject("bluetoothMixinName", bluetoothMixinName);
+
+				printEnabledDefined("navigator[bluetoothMixinName]", (typeof navigator[bluetoothMixinName] !== "undefined"));
+				if (typeof navigator[bluetoothMixinName] !== "undefined") {
+					printObject("navigator[bluetoothMixinName]", navigator[bluetoothMixinName]);
+				}
+			}
+
+		}
+
+		printObject("BLENative", BLENative);
+	}
+
+	printEnabledDefined("_native", (typeof _native !== "undefined"));
+	if (typeof _native !== "undefined") {
+		printEnabledDefined("_native.devices", (typeof _native.devices !== "undefined"));
+		if (typeof _native.devices !== "undefined") {
+			printObject("_native.devices", _native.devices);
+		}
+	}
+
+
 	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	if (typeof navigator.bluetooth !== "undefined") {
 		printObject("navigator.bluetooth", navigator.bluetooth);
 	}
 
-	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
-	if (typeof BLENative !== "undefined") {
-		printObject("BLENative", BLENative);
-	}
 
-	printEnabledDefined("bluetooth", (typeof bluetooth !== "undefined"));
-	if (typeof bluetooth !== "undefined") {
-		printObject("bluetooth", bluetooth);
-	}
 
 	if (typeof navigator.bluetooth !== "undefined") {
 
