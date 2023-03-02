@@ -108,13 +108,13 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	// HTTPS secure context required
 	printEnabledDefined("Secure Context", isSecureContext);
-	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
-	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 
+	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	if (typeof navigator.bluetooth !== "undefined") {
 		printObject("navigator.bluetooth", navigator.bluetooth);
 	}
 
+	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 	if (typeof BLENative !== "undefined") {
 		printObject("BLENative", BLENative);
 	}
