@@ -89,9 +89,9 @@ var OBJtoString = function(_o,_m,_rf,_dep,_res){
 	return _res;
 }
 
-function printObject(obj) {
+function printObject(objName, obj) {
 	let printElement = document.createElement("pre");
-	printElement.textContent = "Object\n" + OBJtoString(obj, 4);
+	printElement.textContent = objName + "\n" + OBJtoString(obj, 4);
 	printElement.style.backgroundColor = colorNote;
 	printElement.style.display = "grid";
 	printElement.style.borderTop = "1px black solid";
@@ -108,12 +108,15 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	// HTTPS secure context required
 	printEnabledDefined("Secure Context", isSecureContext);
-	printEnabledDefined("Bluetooth", (typeof navigator.bluetooth !== "undefined"));
-
+	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 
+	if (typeof navigator.bluetooth !== "undefined") {
+		printObject("navigator.bluetooth", navigator.bluetooth);
+	}
+
 	if (typeof BLENative !== "undefined") {
-		printObject(BLENative);
+		printObject("BLENative", BLENative);
 	}
 
 	if (typeof navigator.bluetooth !== "undefined") {
@@ -137,13 +140,13 @@ debugButton.addEventListener('pointerup', function(event) {
 		if (typeof navigator.bluetooth.requestDevice !== "undefined") {
 			navigator.bluetooth.requestDevice({acceptAllDevices: true})
 			.then(device => {
-				printObject(device);
+				printObject("Bluetooth Device", device);
 			}, reject => {
 				printLog("requestDevice Reject", "[" + reject + "]", false)
 				printNote("If \"No compatible devices can be found\"", "Check bluetooth hardware LMP version is >=6");
 			}).catch(error => {
 				printLog("requestDevice Error", "[" + error + "]", false);
-				printObject(navigator.bluetooth.requestDevice);
+				printObject("bluetooth.requestDevice", navigator.bluetooth.requestDevice);
 			});
 		}
 
