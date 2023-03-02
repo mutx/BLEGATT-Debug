@@ -83,7 +83,7 @@ var OBJtoString = function(_o,_m,_rf,_dep,_res){
 
     	if(_n != n) response += _ws;
 
-    	return response +="} \n";
+    	return response +="}";
     }
 
 	_res = _rf(_o,_m);
