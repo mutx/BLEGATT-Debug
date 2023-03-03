@@ -93,7 +93,7 @@ var OBJtoString = function(_o,_m,_rf,_dep,_res){
 
 function printObject(objName, obj) {
 	let printElement = document.createElement("pre");
-	let objStr = objName + "\n" + OBJtoString(obj, 4);
+	let objStr = objName + ": " + (typeof obj) + "\n" + OBJtoString(obj, 4);
 	printElement.textContent = objStr;
 	printElement.style.backgroundColor = colorNote;
 	printElement.style.display = "grid";
