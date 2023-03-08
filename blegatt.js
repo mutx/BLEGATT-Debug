@@ -123,14 +123,12 @@ debugButton.addEventListener('pointerup', function(event) {
 
 		let payload = {};
 		payload.requestId = BLENative.generateRequestID();
-		payload.acceptAllDevices = true;
 
 		promos[promos.length] = BLENative.request(payload)
 		.then(response => {
-			printLog("BLENative.request responded");
-			printObject(response);
+			printObject("BLENative.request respone", response);
 		}, reject => {
-			printLog("BLENative.request rejected: " + reject);
+			printObject("BLENative.request reject", reject);
 		}).catch(error => {
 			printLog("BLENative.request error: " + error);
 		});
@@ -145,7 +143,7 @@ debugButton.addEventListener('pointerup', function(event) {
 			if (typeof window["webkit"]["messageHandlers"] !== "undefined") {
 				printEnabledDefined("window['webkit']['messageHandlers']['ble']", (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined"));
 				if (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined") {
-					printObject(window["webkit"]["messageHandlers"]["ble"]);
+					printObject("window['webkit']['messageHandlers']['ble']", window["webkit"]["messageHandlers"]["ble"]);
 				}
 			}
 		}
