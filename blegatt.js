@@ -142,7 +142,14 @@ debugButton.addEventListener('pointerup', function(event) {
 	if (typeof navigator.bluetooth !== "undefined") {
 		//printObject("navigator.bluetooth", navigator.bluetooth);
 
-		navigator.bluetooth.requestDevice({accpetAllDevices: true})
+		let options = {
+
+			filters: [
+				{namePrefix: ""}
+			]
+		}
+
+		navigator.bluetooth.requestDevice(options)
 		.then(response => {
 			printObject("navigator.bluetooth.requestDevice response", response);
 		}, reject => {
