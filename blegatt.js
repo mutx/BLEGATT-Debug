@@ -142,13 +142,16 @@ debugButton.addEventListener('pointerup', function(event) {
 	if (typeof navigator.bluetooth !== "undefined") {
 		//printObject("navigator.bluetooth", navigator.bluetooth);
 
-		let serviceData = [{ service: "battery_service" }];
+		let options = {
+			filters: [
+				{namePrefix: "Pinecil"}
+			]
+		};
 
-		navigator.bluetooth.requestDevice({ filters: [{ serviceData }] })
+		navigator.bluetooth.requestDevice(options)
 		.then(response => {
 			printObject("navigator.bluetooth.requestDevice response", response);
 		}, reject => {
-			console.log(reject);
 			printObject("navigator.bluetooth.requestDevice reject", reject);
 		}).catch(error => {
 			printLog("navigator.bluetooth.requestDevice error:", error, false);
