@@ -138,7 +138,7 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	// printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
 
-	if (typeof bluetooth.watchAdvertisements !== "undefined") {
+	if (typeof bluetooth !== "undefined") {
 		printEnabledDefined("bluetooth.watchAdvertisements", (typeof bluetooth.watchAdvertisements !== "undefined"));
 		if (typeof bluetooth.watchAdvertisements !== "undefined") {
 			printObject("bluetooth.watchAdvertisements", bluetooth.watchAdvertisements);
