@@ -123,6 +123,7 @@ debugButton.addEventListener('pointerup', function(event) {
 
 		let payload = {};
 		payload.requestId = BLENative.generateRequestID();
+		payload.acceptAllDevices = true;
 
 		promos[promos.length] = BLENative.request(payload)
 		.then(response => {
