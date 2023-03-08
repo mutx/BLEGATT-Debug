@@ -131,7 +131,7 @@ debugButton.addEventListener('pointerup', function(event) {
 			printObject(reject);
 		}).catch(error => {
 			printLog("BLENative.request error: " + error);
-		})
+		});
 
 	}
 
