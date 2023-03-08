@@ -197,7 +197,4 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	*/
 
-	Promise.allSettled(promos).then(() => {
-		navigator.clipboard.writeText(debugClipboard);
-	});
 });
