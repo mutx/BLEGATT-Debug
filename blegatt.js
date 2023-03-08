@@ -145,7 +145,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		let options = {
 
 			filters: [
-				{namePrefix: ""}
+				{namePrefix: "1"}
 			]
 		}
 
