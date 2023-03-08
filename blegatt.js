@@ -117,7 +117,7 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 	if (typeof BLENative !== "undefined") {
-		printObject("BLENative", BLENative);
+		//printObject("BLENative", BLENative);
 
 		BLENative.enable();
 
@@ -135,19 +135,9 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	}
 
-	printEnabledDefined("window", (typeof window !== "undefined"));
-	if (typeof window !== "undefined") {
-		printEnabledDefined("window['webkit']", (typeof window["webkit"] !== "undefined"));
-		if (typeof window["webkit"] !== "undefined") {
-			printEnabledDefined("window['webkit']['messageHandlers']", (typeof window["webkit"]["messageHandlers"] !== "undefined"));
-			if (typeof window["webkit"]["messageHandlers"] !== "undefined") {
-				printEnabledDefined("window['webkit']['messageHandlers']['ble']", (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined"));
-				if (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined") {
-					printObject("window['webkit']['messageHandlers']['ble']", window["webkit"]["messageHandlers"]["ble"]);
-				}
-			}
-		}
-	}
+
+	printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
+
 
 
 	/*
