@@ -138,17 +138,19 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	// printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
 
-	printEnabledDefined("bluetooth.watchAdvertisements", (typeof bluetooth.watchAdvertisements !== "undefined"));
 	if (typeof bluetooth.watchAdvertisements !== "undefined") {
-		printObject("bluetooth.watchAdvertisements", bluetooth.watchAdvertisements);
+		printEnabledDefined("bluetooth.watchAdvertisements", (typeof bluetooth.watchAdvertisements !== "undefined"));
+		if (typeof bluetooth.watchAdvertisements !== "undefined") {
+			printObject("bluetooth.watchAdvertisements", bluetooth.watchAdvertisements);
 
-		bluetooth.watchAdvertisements()
-		.then(response => {
-			printObject("bluetooth.watchAdvertisements response", response);
-		}, reject => {
-			printObject("bluetooth.watchAdvertisements reject", reject);
-		}).catch(error) {
-			printLog("bluetooth.watchAdvertisements error:", error, false);
+			bluetooth.watchAdvertisements()
+			.then(response => {
+				printObject("bluetooth.watchAdvertisements response", response);
+			}, reject => {
+				printObject("bluetooth.watchAdvertisements reject", reject);
+			}).catch(error) {
+				printLog("bluetooth.watchAdvertisements error:", error, false);
+			}
 		}
 	}
 
