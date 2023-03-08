@@ -148,9 +148,9 @@ debugButton.addEventListener('pointerup', function(event) {
 				printObject("bluetooth.watchAdvertisements response", response);
 			}, reject => {
 				printObject("bluetooth.watchAdvertisements reject", reject);
-			}).catch(error) {
+			}).catch(error => {
 				printLog("bluetooth.watchAdvertisements error:", error, false);
-			}
+			});
 		}
 	}
 
@@ -164,9 +164,9 @@ debugButton.addEventListener('pointerup', function(event) {
 			printObject("navigator.bluetooth.watchAdvertisements response", response);
 		}, reject => {
 			printObject("navigator.bluetooth.watchAdvertisements reject", reject);
-		}).catch(error) {
+		}).catch(error => {
 			printLog("navigator.bluetooth.watchAdvertisements error:", error, false);
-		}
+		});
 	}
 
 	/*
