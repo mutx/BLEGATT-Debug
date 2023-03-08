@@ -140,7 +140,16 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	if (typeof navigator.bluetooth !== "undefined") {
-		printObject("navigator.bluetooth", navigator.bluetooth);
+		//printObject("navigator.bluetooth", navigator.bluetooth);
+
+		navigator.bluetooth.requestDevice({accpetAllDevices: true})
+		.then(response => {
+			printObject("navigator.bluetooth.requestDevice response", response);
+		}, reject => {
+			printObject("navigator.bluetooth.requestDevice reject", reject);
+		}).catch(error => {
+			printLog("navigator.bluetooth.requestDevice error:", error, false);
+		});
 	}
 
 	/*
