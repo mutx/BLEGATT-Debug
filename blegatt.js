@@ -115,58 +115,36 @@ debugButton.addEventListener('pointerup', function(event) {
 	// HTTPS secure context required
 	printEnabledDefined("Secure Context", isSecureContext);
 
-	printEnabledDefined("bluetooth", (typeof bluetooth !== "undefined"));
-	if (typeof bluetooth !== "undefined") {
-		printObject("bluetooth", bluetooth());
-	}
-
 	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 	if (typeof BLENative !== "undefined") {
-
-		printEnabledDefined("BLENative.enable", (typeof BLENative.enable !== "undefined"));
-		if (typeof BLENative.enable !== "undefined") {
-
-			printObject("BLENative.enable [Pre]", BLENative.enable);
-
-			BLENative.enable();
-
-			printObject("BLENative.enable [Post]", BLENative.enable);
-
-
-			printEnabledDefined("bluetoothMixinName", (typeof bluetoothMixinName !== "undefined"));
-			if (typeof bluetoothMixinName !== "undefined") {
-				printObject("bluetoothMixinName", bluetoothMixinName);
-
-				printEnabledDefined("navigator[bluetoothMixinName]", (typeof navigator[bluetoothMixinName] !== "undefined"));
-				if (typeof navigator[bluetoothMixinName] !== "undefined") {
-					printObject("navigator[bluetoothMixinName]", navigator[bluetoothMixinName]);
-				}
-			}
-
-		}
-
 		printObject("BLENative", BLENative);
+
+		let payload = {};
+		payload.requestId = BLENative.generateRequestID();
+
+		promos[promos.length] = BLENative.request(payload)
+		.then(response => {
+			printLog("BLENative.request responded");
+			printObject(response);
+		}, reject => {
+			printLog("BLENative.request rejected");
+			printObject(reject);
+		}).catch(error => {
+			printLog("BLENative.request error: " + error);
+		})
+
 	}
 
-	printEnabledDefined("_native", (typeof _native !== "undefined"));
-	if (typeof _native !== "undefined") {
-		printEnabledDefined("_native.devices", (typeof _native.devices !== "undefined"));
-		if (typeof _native.devices !== "undefined") {
-			printObject("_native.devices", _native.devices);
-		}
-	}
 
+	/*
 
 	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	if (typeof navigator.bluetooth !== "undefined") {
 		printObject("navigator.bluetooth", navigator.bluetooth);
 	}
 
-
-
 	if (typeof navigator.bluetooth !== "undefined") {
 
-		printEnabledDefined("Bluetooth.requestDevice", (typeof navigator.bluetooth.requestDevice !== "undefined"));
 		printEnabledDefined("Bluetooth.getAvailability", (typeof navigator.bluetooth.getAvailability !== "undefined"));
 
 		if (typeof navigator.bluetooth.getAvailability !== "undefined") {
@@ -182,22 +160,11 @@ debugButton.addEventListener('pointerup', function(event) {
 			});
 		}
 
-		if (typeof navigator.bluetooth.requestDevice !== "undefined") {
-			promos[promos.length] = navigator.bluetooth.requestDevice({acceptAllDevices: true})
-			.then(device => {
-				printObject("Bluetooth Device", device);
-			}, reject => {
-				printLog("requestDevice Reject", "[" + reject + "]", false)
-				printNote("If \"No compatible devices can be found\"", "Check bluetooth hardware LMP version is >=6");
-			}).catch(error => {
-				printLog("requestDevice Error", "[" + error + "]", false);
-				printObject("bluetooth.requestDevice", navigator.bluetooth.requestDevice);
-			});
-		}
-
 	} else {
 		printEnabledDefined("navigator.bluetooth", false);
 	}
+
+	*/
 
 	Promise.allSettled(promos).then(() => {
 		navigator.clipboard.writeText(debugClipboard);
