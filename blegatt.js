@@ -145,9 +145,9 @@ debugButton.addEventListener('pointerup', function(event) {
 		let options = {
 
 			filters: [
-				{namePrefix: ""}
+				{namePrefix: "S"}
 			]
-		}
+		};
 
 		navigator.bluetooth.requestDevice({options})
 		.then(response => {
