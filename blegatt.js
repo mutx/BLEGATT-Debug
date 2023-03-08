@@ -119,6 +119,8 @@ debugButton.addEventListener('pointerup', function(event) {
 	if (typeof BLENative !== "undefined") {
 		printObject("BLENative", BLENative);
 
+		BLENative.enable();
+
 		let payload = {};
 		payload.requestId = BLENative.generateRequestID();
 
@@ -132,6 +134,20 @@ debugButton.addEventListener('pointerup', function(event) {
 			printLog("BLENative.request error: " + error);
 		});
 
+	}
+
+	printEnabledDefined("window", (typeof window !== "undefined"));
+	if (typeof window !== "undefined") {
+		printEnabledDefined("window['webkit']", (typeof window["webkit"] !== "undefined"));
+		if (typeof window["webkit"] !== "undefined") {
+			printEnabledDefined("window['webkit']['messageHandlers']", (typeof window["webkit"]["messageHandlers"] !== "undefined"));
+			if (typeof window["webkit"]["messageHandlers"] !== "undefined") {
+				printEnabledDefined("window['webkit']['messageHandlers']['ble']", (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined"));
+				if (typeof window["webkit"]["messageHandlers"]["ble"] !== "undefined") {
+					printObject(window["webkit"]["messageHandlers"]["ble"]);
+				}
+			}
+		}
 	}
 
 
