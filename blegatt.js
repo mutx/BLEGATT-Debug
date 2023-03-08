@@ -145,7 +145,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		let options = {
 
 			filters: [
-				{namePrefix: "1"}
+				{namePrefix: ""}
 			]
 		}
 
@@ -153,6 +153,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		.then(response => {
 			printObject("navigator.bluetooth.requestDevice response", response);
 		}, reject => {
+			console.log(reject);
 			printObject("navigator.bluetooth.requestDevice reject", reject);
 		}).catch(error => {
 			printLog("navigator.bluetooth.requestDevice error:", error, false);
