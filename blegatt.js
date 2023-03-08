@@ -124,7 +124,7 @@ debugButton.addEventListener('pointerup', function(event) {
 		let payload = {};
 		payload.requestId = BLENative.generateRequestID();
 
-		promos[promos.length] = BLENative.request(payload)
+		BLENative.request(payload)
 		.then(response => {
 			printObject("BLENative.request respone", response);
 		}, reject => {
@@ -136,9 +136,36 @@ debugButton.addEventListener('pointerup', function(event) {
 	}
 
 
-	printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
+	// printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
+
+	printEnabledDefined("bluetooth.watchAdvertisements", (typeof bluetooth.watchAdvertisements !== "undefined"));
+	if (typeof bluetooth.watchAdvertisements !== "undefined") {
+		printObject("bluetooth.watchAdvertisements", bluetooth.watchAdvertisements);
+
+		bluetooth.watchAdvertisements()
+		.then(response => {
+			printObject("bluetooth.watchAdvertisements response", response);
+		}, reject => {
+			printObject("bluetooth.watchAdvertisements reject", reject);
+		}).catch(error) {
+			printLog("bluetooth.watchAdvertisements error:", error, false);
+		}
+	}
 
 
+	printEnabledDefined("navigator.bluetooth.watchAdvertisements", (typeof navigator.bluetooth.watchAdvertisements !== "undefined"));
+	if (typeof navigator.bluetooth.watchAdvertisements !== "undefined") {
+		printObject("navigator.bluetooth.watchAdvertisements", navigator.bluetooth.watchAdvertisements);
+
+		navigator.bluetooth.watchAdvertisements()
+		.then(response => {
+			printObject("navigator.bluetooth.watchAdvertisements response", response);
+		}, reject => {
+			printObject("navigator.bluetooth.watchAdvertisements reject", reject);
+		}).catch(error) {
+			printLog("navigator.bluetooth.watchAdvertisements error:", error, false);
+		}
+	}
 
 	/*
 
