@@ -153,7 +153,7 @@ debugButton.addEventListener('pointerup', function(event) {
 
 		navigator.bluetooth.requestDevice(options)
 		.then(response => {
-			printLog("navigator.bluetooth.requestDevice", "responded");
+			printLog("navigator.bluetooth.requestDevice", "responded" + (typeof response));
 			//printObject("navigator.bluetooth.requestDevice response", response);
 		}, reject => {
 			printLog("navigator.bluetooth.requestDevice", "rejected");
