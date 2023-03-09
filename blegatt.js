@@ -115,6 +115,7 @@ debugButton.addEventListener('pointerup', function(event) {
 	// HTTPS secure context required
 	printEnabledDefined("Secure Context", isSecureContext);
 
+	/*
 	printEnabledDefined("BLENative", (typeof BLENative !== "undefined"));
 	if (typeof BLENative !== "undefined") {
 		//printObject("BLENative", BLENative);
@@ -135,8 +136,8 @@ debugButton.addEventListener('pointerup', function(event) {
 
 	}
 
-
-	// printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
+	printObject("window['webkit']['messageHandlers']['ble'].postMessage", window["webkit"]["messageHandlers"]["ble"].postMessage);
+	*/
 
 	printEnabledDefined("navigator.bluetooth", (typeof navigator.bluetooth !== "undefined"));
 	if (typeof navigator.bluetooth !== "undefined") {
@@ -147,6 +148,8 @@ debugButton.addEventListener('pointerup', function(event) {
 				{namePrefix: "Pinecil"}
 			]
 		};
+
+		printObject(navigator.bluetooth.requestDevice);
 
 		navigator.bluetooth.requestDevice(options)
 		.then(response => {
